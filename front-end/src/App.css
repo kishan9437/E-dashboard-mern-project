@@ -14,9 +14,11 @@
   padding: 5px;
   text-decoration: none;
 }
-.nav-right{
+
+.nav-right {
   text-align: right;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -33,7 +35,8 @@
   border: 1px solid skyblue;
 }
 
-.register ,.product{
+.register,
+.product {
   margin-left: 35%;
 }
 
@@ -48,6 +51,38 @@
   width: 150px;
   background-color: skyblue;
   cursor: pointer;
+}
+
+.invalid-input {
+  color: red;
+  margin-top: -20px;
+  display: block;
+  /* margin-left: 20px; */
+}
+
+.product-list {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.product-list ul {
+  margin: 0;
+  padding-left: 0px;
+}
+
+.product-list ul li {
+  display: inline-block;
+  list-style: none;
+  padding: 10px;
+  border: 1px solid skyblue;
+  width: 200px;
+}
+
+.update {
+  text-decoration: none;
+  margin-left: 10px;
+  color: black;
+  font-weight: 600;
 }
 
 @media (prefers-reduced-motion: no-preference) {

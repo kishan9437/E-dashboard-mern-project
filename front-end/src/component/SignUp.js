@@ -29,8 +29,7 @@ export default function SignUp() {
 
         if(result){
             navigate('/')
-        }
-        
+        }    
     }
 
     return (
