@@ -9,14 +9,21 @@ export default function ProducList() {
     }, [])
 
     const getProducts = async () => {
-        let result = await fetch('http://localhost:5000/products');
+        let result = await fetch('http://localhost:5000/products',{
+            headers: {
+                authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}` 
+            }
+        });
         result = await result.json();
         setProduct(result)
     }
 
     const deleteProduct = async (id) => {
         let result = await fetch(`http://localhost:5000/product/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}` 
+            }
         });
         result = await result.json();
         if (result) {
@@ -25,9 +32,29 @@ export default function ProducList() {
         }
     }
 
+    const searchHandle = async (e) => {
+        let key = e.target.value.toLowerCase();
+        if (key) {
+            let result = await fetch(`http://localhost:5000/search/${key}`,{
+                headers: {
+                    authorization:`bearer ${JSON.parse(localStorage.getItem('token'))}` 
+                }
+            })
+            result = await result.json();
+            if (result) {
+                setProduct(result);
+            }
+        }
+        else {
+            getProducts();
+        }
+
+    }
+
     return (
         <div className='product-list'>
             <h1>Product list</h1>
+            <input type='text' placeholder='Search Product' className='search-product-box' onChange={searchHandle} />
             <ul>
                 <li><b>S.No</b></li>
                 <li><b>Name</b></li>
@@ -37,7 +64,7 @@ export default function ProducList() {
                 <li><b>Operation</b></li>
             </ul>
             {
-                product.map((item, index) => (
+                product.length>0 ? product.map((item, index) => (
                     <ul key={index}>
                         <li>{index + 1}</li>
                         <li>{item.name}</li>
@@ -45,11 +72,11 @@ export default function ProducList() {
                         <li>{item.category}</li>
                         <li>{item.company}</li>
                         <li>
-                            <button  onClick={() => deleteProduct(item._id)}>Delete</button>
-                            <Link className='update' to={'/update/'+item._id}>Update</Link>
+                            <button onClick={() => deleteProduct(item._id)}>Delete</button>
+                            <Link className='update' to={'/update/' + item._id}>Update</Link>
                         </li>
                     </ul>
-                ))
+                )):<h1>No Result Found</h1>
             }
         </div>
     )
